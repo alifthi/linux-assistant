@@ -14,6 +14,7 @@ def shell_node( state: AgentState)->  AgentState:
     '''To run a shell code that generated with AI'''
     state['logger'].print_text("🔧 Running shell command ...", color='blue', end='\n')
     print("\n")
+    state['logger'].print_text(f"🏃 Running command\n * {state['code'][1:]}", color='gray50', end='\n')    
     t = time.perf_counter()
 
     proc = processor(show_output=SHOW_CODE_OUTPUT)
@@ -32,7 +33,7 @@ def shell_node( state: AgentState)->  AgentState:
 def tool_select(state: AgentState) -> AgentState:
     ''' To decide witch tool is needed '''
     last = state["messages"][-1]['content'].split('</think>')[-1]
-    if "shell_node" in last:
+    if "shell_node" in last or "```bash" in last:
         return "shell_node"
     elif "search_node" in last:
         return "search_node"

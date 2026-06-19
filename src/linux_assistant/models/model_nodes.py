@@ -44,7 +44,7 @@ class model_nodes:
         for chunk in stream:     
             chunk = chunk["choices"][0]["delta"].get("content", "")
             response_content += chunk
-            if (is_think_generated and (chunk == 'shell' or chunk == 'search')) or dont_show:
+            if (is_think_generated and (chunk == 'shell' or chunk == 'search' or chunk == '```')) or dont_show:
                 dont_show = True
                 continue
             if tmp:
@@ -62,7 +62,7 @@ class model_nodes:
         model_path = hf_hub_download(repo_id=REPO_ID, filename=GENERATION_MODEL, local_dir="./model")
         return Llama(
             model_path=model_path,
-            n_ctx=4096,                    
+            n_ctx=2**14,                    
             n_gpu_layers=10,               
             chat_format='qwen',
             verbose=False,
