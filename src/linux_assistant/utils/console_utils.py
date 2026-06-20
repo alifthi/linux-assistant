@@ -7,7 +7,8 @@ from prompt_toolkit.completion import WordCompleter
 import questionary
 
 class console_utils:
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         self.console = Console()
         self.banner = Figlet(font="slant").renderText("Linux Assistant")
         self.intro_md = Markdown("Welcome! Enjoy your linux more.")
@@ -16,10 +17,8 @@ class console_utils:
             'answer': 'gray',
             'pointer': 'yellow'})
         
-        commands = ["/help",
-                    "/summarize",
-                    "/translate",
-                    "/code",]
+        commands = ["/model",
+                    "/quit"]
         self.completer = WordCompleter(commands)
 
     def release_banner(self):
@@ -27,9 +26,26 @@ class console_utils:
         self.console.print(self.intro_md)
     
     def get_user_input(self):
-        cmd = questionary.text("➜",style=self.custom_style,qmark="", completer=self.completer).ask()
-        if cmd == None:
+        cmd = questionary.text(
+            "➜",
+            style=self.custom_style,
+            qmark="",
+            completer=self.completer
+        ).ask()
+
+        if cmd is None:
             raise SystemExit
+
+        if cmd == "/model":
+            
+            model = questionary.select(
+                "Select model:",
+                choices=self.config.get_models_list(),
+                style=self.custom_style
+            ).ask()
+
+            res = self.config.change_model(model)
+            cmd = self.get_user_input()
         return cmd  
     
     def print_text(self, text, color, end = ''):
