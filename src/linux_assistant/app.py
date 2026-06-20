@@ -1,10 +1,11 @@
 from linux_assistant.graph.graph import build_graph
 from linux_assistant.utils.dicts import AgentState
 from linux_assistant.utils.console_utils import console_utils
-
+from linux_assistant.utils.config_handler import config
 
 def run_app():
-    app = build_graph()
+    model_config = config()
+    app = build_graph(model_config)
     console = console_utils()
 
     state: AgentState = {"messages": [], "logger": console}
