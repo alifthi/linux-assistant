@@ -67,3 +67,10 @@ class console_utils:
     
     def print_text(self, text, color, end = ''):
         self.console.print(f"[{color}]{text}", end=end)
+        
+    def ask_for_cmd_run(self, cmd):
+        answer = questionary.confirm(
+            f"Do you want to run this command? \n {cmd}",
+            style=self.custom_style
+        ).ask()
+        return answer

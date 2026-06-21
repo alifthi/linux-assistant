@@ -12,9 +12,11 @@ import gc
 
 def shell_node( state: AgentState)->  AgentState:
     '''To run a shell code that generated with AI'''
+    
+    state['logger'].ask_for_cmd_run(state['code'])
     state['logger'].print_text("🔧 Running shell command ...", color='blue', end='\n')
     print("\n")
-    state['logger'].print_text(f"🏃 Running command\n * {state['code'][1:]}", color='gray50', end='\n')    
+    # state['logger'].print_text(f"🏃 Running command\n * {state['code'][1:]}", color='gray50', end='\n')    
     t = time.perf_counter()
 
     proc = processor(show_output=SHOW_CODE_OUTPUT)
