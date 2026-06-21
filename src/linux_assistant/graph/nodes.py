@@ -13,10 +13,14 @@ import gc
 def shell_node( state: AgentState)->  AgentState:
     '''To run a shell code that generated with AI'''
     
-    state['logger'].ask_for_cmd_run(state['code'])
+    ans = state['logger'].ask_for_cmd_run(state['code'])
+    if not ans:
+        state['logger'].print_text("❌ Command execution cancelled by user.", color='red', end='\n')
+        print("\n")
+        state['messages'].append({'role':'user', 'content': "Command execution cancelled by user."})
+        return state
     state['logger'].print_text("🔧 Running shell command ...", color='blue', end='\n')
     print("\n")
-    # state['logger'].print_text(f"🏃 Running command\n * {state['code'][1:]}", color='gray50', end='\n')    
     t = time.perf_counter()
 
     proc = processor(show_output=SHOW_CODE_OUTPUT)
@@ -52,14 +56,16 @@ def prepare_shell_code(state:AgentState) -> AgentState:
 
 def prepare_tool_prompt( state: AgentState) -> AgentState:
     '''Prepare the output of executed command for LM'''
-    content = (
-        "Here is the output of command you generated:\n"
-        f"stdout:\n{state['stdout']}\n"
-        f"stderr:\n{state['stderr']}\n"
-        f"exit_code: {state['exit_code']}"
-    )
-    state['messages'].append({'role':'user', 'content': content})
-
+    try:
+        content = (
+            "Here is the output of command you generated:\n"
+            f"stdout:\n{state['stdout']}\n"
+            f"stderr:\n{state['stderr']}\n"
+            f"exit_code: {state['exit_code']}"
+        )
+        state['messages'].append({'role':'user', 'content': content})
+    except:
+        pass
     return state
 def prepare_search_query(state: AgentState) -> AgentState:
     '''Prepare the query for giving to search_node'''
