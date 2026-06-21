@@ -1,23 +1,23 @@
 {
-    "in_use_model":{
-        "generator":"Qwen3.5-4B-Q6_K.gguf",
-        "repo_id":"unsloth/Qwen3.5-4B-GGUF"
+    "in_use_model": {
+        "generator": "Qwen3.5-4B-Q6_K.gguf",
+        "repo_id": "unsloth/Qwen3.5-4B-GGUF"
     },
-    "to_use_models":[
+    "to_use_models": [
         {
-            "generator":"Qwen3.5-2B-BF16.gguf",
-            "repo_id":"unsloth/Qwen3.5-2B-GGUF"
+            "generator": "Qwen3.5-2B-BF16.gguf",
+            "repo_id": "unsloth/Qwen3.5-2B-GGUF"
         },
         {
-            "generator":"Qwen3.5-4B-BF16.gguf",
-            "repo_id":"unsloth/Qwen3.5-4B-GGUF"
+            "generator": "Qwen3.5-4B-BF16.gguf",
+            "repo_id": "unsloth/Qwen3.5-4B-GGUF"
         },
         {
-            "generator":"Qwen3.5-4B-Q8_0.gguf",
-            "repo_id":"unsloth/Qwen3.5-4B-GGUF"
+            "generator": "Qwen3.5-4B-Q8_0.gguf",
+            "repo_id": "unsloth/Qwen3.5-4B-GGUF"
         }
     ],
-    "show_thinking":false,
-    "max_search_results":5,
-    "wiki_pedia_results":1
+    "show_thinking": false,
+    "max_search_results": 5,
+    "wiki_pedia_results": 1
 }

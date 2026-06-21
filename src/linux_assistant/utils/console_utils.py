@@ -3,9 +3,26 @@ from rich.console import Console
 from rich.markdown import Markdown
 from prompt_toolkit.styles import Style
 from prompt_toolkit import prompt
-from prompt_toolkit.completion import WordCompleter
+from prompt_toolkit.completion import Completer, Completion
+
 import questionary
 
+
+class CommandCompleter(Completer):
+    def __init__(self, commands):
+        self.commands = commands
+    def get_completions(self, document, complete_event):
+        text = document.text_before_cursor
+
+        if not text.startswith("/"):
+            return
+
+        for cmd in self.commands:
+            if cmd.startswith(text):
+                yield Completion(
+                    cmd,
+                    start_position=-len(text)
+                )
 class console_utils:
     def __init__(self, config):
         self.config = config
@@ -19,7 +36,7 @@ class console_utils:
         
         commands = ["/model",
                     "/quit"]
-        self.completer = WordCompleter(commands)
+        self.completer = CommandCompleter(commands) 
 
     def release_banner(self):
         self.console.print(self.banner, style="cyan")
