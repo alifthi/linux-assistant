@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "linux-assistant"
-version = "0.1.3"
+version = "0.1.4"
 description = "An AI-powered natural-language Linux assistant"
 readme = "README.md"
 license = { file = "LICENSE" }
